@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapeamento de Integrações - MELI x TOTVS/Ahgora</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ======================================================
+           TOTVS Design System — CSS Custom Properties
+        ====================================================== */
+        :root {
+            --blue-primary:   #0056D2;
+            --blue-dark:      #0B1F33;
+            --blue-mid:       #1A3A5C;
+            --blue-light:     #EAF2FF;
+            --blue-accent:    #3B82F6;
+
+            --bg-canvas:      #F0F4F9;
+            --bg-surface:     #FFFFFF;
+            --bg-subtle:      #F7FAFD;
+
+            --border-default: #DDE3ED;
+            --border-strong:  #C1CCE0;
+
+            --text-primary:   #0B1F33;
+            --text-secondary: #4B5E7A;
+            --text-muted:     #8597B0;
+            --text-white:     #FFFFFF;
+
+            --green:          #16A34A;
+            --green-bg:       #DCFCE7;
+            --green-border:   #86EFAC;
+
+            --amber:          #D97706;
+            --amber-bg:       #FEF3C7;
+            --amber-border:   #FCD34D;
+
+            --red:            #DC2626;
+            --red-bg:         #FEE2E2;
+            --red-border:     #FCA5A5;
+
+            --orange:         #EA580C;
+            --orange-bg:      #FFEDD5;
+            --orange-border:  #FED7AA;
+
+            --purple:         #7C3AED;
+            --purple-bg:      #EDE9FE;
+            --purple-border:  #C4B5FD;
+
+            --shadow-sm:      0 1px 3px rgba(11,31,51,.06), 0 1px 2px rgba(11,31,51,.04);
+            --shadow-md:      0 4px 12px rgba(11,31,51,.08), 0 2px 4px rgba(11,31,51,.06);
+            --shadow-lg:      0 12px 32px rgba(11,31,51,.12), 0 4px 8px rgba(11,31,51,.08);
+            --shadow-xl:      0 24px 64px rgba(11,31,51,.18), 0 8px 16px rgba(11,31,51,.10);
+
+            --radius-sm:      6px;
+            --radius-md:      10px;
+            --radius-lg:      14px;
+            --radius-xl:      20px;
+
+            --transition:     all .18s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ======================================================
+           Reset & Base
+        ====================================================== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            background: var(--bg-canvas);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ======================================================
+           Scrollbar
+        ====================================================== */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* ======================================================
+           Header
+        ====================================================== */
+        .site-header {
+            background: var(--blue-dark);
+            background-image: linear-gradient(135deg, #0B1F33 0%, #0E2A45 50%, #0B2550 100%);
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            position: relative;
+            overflow: hidden;
+        }
+        .site-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 120% at 80% 50%, rgba(0,86,210,.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .header-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 28px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .brand-logos {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .brand-chip {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 5px;
+            line-height: 1;
+        }
+        .chip-meli {
+            background: #FFE600;
+            color: #0B1F33;
+        }
+        .chip-totvs {
+            background: rgba(0,86,210,.7);
+            color: #fff;
+            border: 1px solid rgba(0,86,210,.9);
+        }
+        .brand-sep {
+            color: rgba(255,255,255,.3);
+            font-size: 16px;
+            font-weight: 300;
+        }
+        .header-divider {
+            width: 1px;
+            height: 28px;
+            background: rgba(255,255,255,.12);
+        }
+        .header-title-block h1 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -.01em;
+        }
+        .header-title-block p {
+            font-size: 11.5px;
+            color: rgba(255,255,255,.45);
+            margin-top: 1px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            text-decoration: none;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+        .btn svg { flex-shrink: 0; }
+        .btn-primary {
+            background: var(--blue-primary);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0,86,210,.35);
+        }
+        .btn-primary:hover {
+            background: #0049B8;
+            box-shadow: 0 4px 16px rgba(0,86,210,.45);
+            transform: translateY(-1px);
+        }
+        .btn-ghost-white {
+            background: rgba(255,255,255,.08);
+            color: rgba(255,255,255,.8);
+            border: 1px solid rgba(255,255,255,.12);
+        }
+        .btn-ghost-white:hover {
+            background: rgba(255,255,255,.14);
+            color: #fff;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-default);
+        }
+        .btn-ghost:hover {
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+        }
+        .btn-dark {
+            background: var(--blue-dark);
+            color: #fff;
+        }
+        .btn-dark:hover {
+            background: var(--blue-mid);
+            transform: translateY(-1px);
+        }
+        .btn-danger {
+            background: var(--red);
+            color: #fff;
+        }
+        .btn-success {
+            background: var(--green);
+            color: #fff;
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        .btn-lg {
+            padding: 10px 20px;
+            font-size: 13.5px;
+        }
+        .btn-icon {
+            padding: 7px;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            border: 1px solid transparent;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            font-family: inherit;
+        }
+        .btn-icon:hover {
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+            border-color: var(--border-default);
+        }
+
+        /* ======================================================
+           Navigation Tabs
+        ====================================================== */
+        .nav-bar {
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-default);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 0 rgba(11,31,51,.05);
+        }
+        .nav-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 28px;
+            display: flex;
+            align-items: stretch;
+            overflow-x: auto;
+            gap: 0;
+        }
+        .nav-inner::-webkit-scrollbar { display: none; }
+        .tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0 18px;
+            height: 48px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-bottom: 2.5px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            font-family: inherit;
+        }
+        .tab-btn:hover { color: var(--text-primary); }
+        .tab-btn.active {
+            color: var(--blue-primary);
+            border-bottom-color: var(--blue-primary);
+            font-weight: 600;
+        }
+        .tab-btn .tab-icon {
+            width: 15px;
+            height: 15px;
+            opacity: .7;
+        }
+        .tab-btn.active .tab-icon { opacity: 1; }
+
+        /* ======================================================
+           Main Layout
+        ====================================================== */
+        .main-content {
+            flex: 1;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 28px 28px 48px;
+            width: 100%;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ======================================================
+           Section Headers
+        ====================================================== */
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -.02em;
+        }
+        .section-subtitle {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ======================================================
+           Cards
+        ====================================================== */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        .card-body { padding: 24px; }
+        .card-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .card-header-title {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-header-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .card-footer {
+            padding: 12px 24px;
+            border-top: 1px solid var(--border-default);
+            background: var(--bg-subtle);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        }
+
+        /* ======================================================
+           KPI Cards
+        ====================================================== */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .kpi-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 20px 22px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .kpi-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+        .kpi-card.kpi-blue::before   { background: var(--blue-primary); }
+        .kpi-card.kpi-red::before    { background: var(--red); }
+        .kpi-card.kpi-amber::before  { background: var(--amber); }
+        .kpi-card.kpi-green::before  { background: var(--green); }
+        .kpi-label {
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .kpi-value {
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -.03em;
+            line-height: 1;
+        }
+        .kpi-value.blue  { color: var(--blue-primary); }
+        .kpi-value.red   { color: var(--red); }
+        .kpi-value.amber { color: var(--amber); }
+        .kpi-value.green { color: var(--green); }
+        .kpi-sub {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+        .kpi-icon {
+            position: absolute;
+            top: 18px; right: 18px;
+            width: 36px; height: 36px;
+            border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .kpi-icon.blue   { background: var(--blue-light); color: var(--blue-primary); }
+        .kpi-icon.red    { background: var(--red-bg); color: var(--red); }
+        .kpi-icon.amber  { background: var(--amber-bg); color: var(--amber); }
+        .kpi-icon.green  { background: var(--green-bg); color: var(--green); }
+
+        /* ======================================================
+           Badges & Chips
+        ====================================================== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 99px;
+            white-space: nowrap;
+            letter-spacing: .01em;
+        }
+        .badge-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .badge.ok       { background: var(--green-bg);   color: #15803D; border: 1px solid var(--green-border); }
+        .badge.critico  { background: var(--red-bg);     color: #B91C1C; border: 1px solid var(--red-border); }
+        .badge.instavel { background: var(--orange-bg);  color: #C2410C; border: 1px solid var(--orange-border); }
+        .badge.migracao { background: var(--blue-light);  color: #1D4ED8; border: 1px solid #BFDBFE; }
+        .badge.pendente { background: #F1F5F9;            color: #475569;  border: 1px solid #CBD5E1; }
+        .badge.evolucao { background: var(--purple-bg);  color: #6D28D9; border: 1px solid var(--purple-border); }
+
+        .badge.prio-critica { background: var(--red-bg);   color: #B91C1C; border: 1px solid var(--red-border); }
+        .badge.prio-alta    { background: var(--orange-bg); color: #C2410C; border: 1px solid var(--orange-border); }
+        .badge.prio-media   { background: var(--amber-bg);  color: #92400E; border: 1px solid var(--amber-border); }
+        .badge.prio-baixa   { background: #F1F5F9;          color: #475569;  border: 1px solid #CBD5E1; }
+
+        .resp-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+        .resp-chip.meli         { background: #FEF9C3; color: #854D0E; border: 1px solid #FDE68A; }
+        .resp-chip.totvs        { background: var(--blue-light); color: #1D4ED8; border: 1px solid #BFDBFE; }
+        .resp-chip.compartilhado { background: var(--green-bg); color: #15803D; border: 1px solid var(--green-border); }
+
+        .tech-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-default);
+        }
+        .tech-tag.rest  { background: #F0FDF4; color: #15803D; border-color: #BBF7D0; }
+        .tech-tag.soap  { background: #FFF7ED; color: #C2410C; border-color: #FED7AA; }
+        .tech-tag.recon { background: var(--purple-bg); color: #6D28D9; border-color: var(--purple-border); }
+        .tech-tag.manual { background: #F8FAFC; color: #64748B; border-color: #E2E8F0; }
+        .tech-tag.sap   { background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE; }
+
+        /* ======================================================
+           Charts & Bars
+        ====================================================== */
+        .chart-bar-row {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .bar-item {}
+        .bar-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .bar-label { font-size: 12.5px; color: var(--text-secondary); font-weight: 500; }
+        .bar-count { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+        .bar-track {
+            height: 6px;
+            background: var(--border-default);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 99px;
+            transition: width .6s cubic-bezier(.4,0,.2,1);
+        }
+        .bar-meli  { background: #FBBF24; }
+        .bar-totvs { background: var(--blue-primary); }
+        .bar-comp  { background: var(--green); }
+
+        .stat-mini-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .stat-mini {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+        }
+        .stat-mini-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .stat-mini-value {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -.03em;
+            line-height: 1;
+        }
+        .stat-ok     { color: var(--green); }
+        .stat-instavel { color: var(--orange); }
+        .stat-migracao { color: var(--blue-primary); }
+        .stat-critico { color: var(--red); }
+        .stat-pendente { color: var(--text-muted); }
+
+        /* ======================================================
+           Alert / Risk Panels
+        ====================================================== */
+        .alert-dark {
+            background: var(--blue-dark);
+            background-image: linear-gradient(135deg, #0B1F33 0%, #0E2A45 100%);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,.07);
+        }
+        .alert-dark-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FCD34D;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+        .alert-item {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .alert-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .alert-item-title {
+            font-size: 12.5px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .alert-item-title.red    { color: #FCA5A5; }
+        .alert-item-title.orange { color: #FED7AA; }
+        .alert-item-body {
+            font-size: 12px;
+            color: rgba(255,255,255,.5);
+            line-height: 1.6;
+        }
+
+        /* ======================================================
+           Pending Panel
+        ====================================================== */
+        .pending-item {
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-default);
+            margin-bottom: 10px;
+        }
+        .pending-item:last-child { margin-bottom: 0; }
+        .pending-item.amber {
+            background: var(--amber-bg);
+            border-color: var(--amber-border);
+        }
+        .pending-item.blue {
+            background: var(--blue-light);
+            border-color: #BFDBFE;
+        }
+        .pending-item-title {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        .amber .pending-item-title { color: #92400E; }
+        .blue  .pending-item-title { color: #1D4ED8; }
+        .pending-item-body {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .amber .pending-item-body { color: #78350F; }
+        .blue  .pending-item-body { color: #1E40AF; }
+
+        /* ======================================================
+           Filters
+        ====================================================== */
+        .filter-bar {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 14px 18px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .filter-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--text-muted);
+            margin-right: 4px;
+        }
+        .form-input, .form-select {
+            height: 36px;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 0 12px;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: var(--bg-surface);
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .form-input:focus, .form-select:focus {
+            border-color: var(--blue-primary);
+            box-shadow: 0 0 0 3px rgba(0,86,210,.1);
+        }
+        .form-input { min-width: 220px; }
+        .form-select { min-width: 160px; cursor: pointer; }
+        .form-input::placeholder { color: var(--text-muted); }
+
+        /* ======================================================
+           Table
+        ====================================================== */
+        .table-wrap {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .table-scroll { overflow-x: auto; }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table thead tr {
+            background: var(--blue-dark);
+        }
+        .data-table thead th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: rgba(255,255,255,.7);
+            white-space: nowrap;
+        }
+        .data-table thead th:first-child { border-radius: 0; color: rgba(255,255,255,.9); }
+        .data-table tbody tr {
+            border-bottom: 1px solid var(--border-default);
+            transition: var(--transition);
+        }
+        .data-table tbody tr:last-child { border-bottom: none; }
+        .data-table tbody tr:hover { background: var(--blue-light); }
+        .data-table tbody tr.critico-row { background: #FFF5F5; }
+        .data-table tbody tr.critico-row:hover { background: #FEE2E2; }
+        .data-table td {
+            padding: 13px 16px;
+            vertical-align: middle;
+            font-size: 12.5px;
+            color: var(--text-secondary);
+        }
+        .data-table td.td-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 200px;
+        }
+        .data-table td.td-obj {
+            max-width: 240px;
+            color: var(--text-muted);
+        }
+        .td-truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .table-footer {
+            padding: 10px 18px;
+            background: var(--bg-subtle);
+            border-top: 1px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .table-footer-text {
+            font-size: 11.5px;
+            color: var(--text-muted);
+        }
+        .table-footer-text strong { color: var(--text-primary); }
+        .table-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ======================================================
+           RACI Matrix
+        ====================================================== */
+        .raci-table { width: 100%; border-collapse: collapse; }
+        .raci-table thead tr { background: var(--bg-subtle); }
+        .raci-table thead th {
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-default);
+        }
+        .raci-table thead th:first-child { text-align: left; min-width: 220px; }
+        .raci-table tbody tr { border-bottom: 1px solid var(--border-default); transition: var(--transition); }
+        .raci-table tbody tr:hover { background: var(--blue-light); }
+        .raci-table td {
+            padding: 14px 16px;
+            text-align: center;
+            font-size: 12.5px;
+        }
+        .raci-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 13px;
+        }
+        .raci-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px; height: 28px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .raci-R { background: #DBEAFE; color: #1D4ED8; }
+        .raci-A { background: var(--amber-bg); color: #92400E; }
+        .raci-C { background: var(--green-bg); color: #15803D; }
+        .raci-I { background: #F1F5F9; color: #64748B; }
+
+        /* ======================================================
+           Risk Cards
+        ====================================================== */
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .risk-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        .risk-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .risk-card-accent {
+            height: 4px;
+            flex-shrink: 0;
+        }
+        .risk-card-body {
+            padding: 18px 20px;
+            flex: 1;
+        }
+        .risk-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .risk-card-category {
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--text-muted);
+        }
+        .risk-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .risk-card-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .risk-card-footer {
+            padding: 12px 20px;
+            background: var(--bg-subtle);
+            border-top: 1px solid var(--border-default);
+        }
+        .risk-card-footer-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .risk-card-footer-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ======================================================
+           Roadmap Timeline
+        ====================================================== */
+        .roadmap-timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+        .roadmap-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 14px; bottom: 14px;
+            width: 2px;
+            background: var(--border-default);
+        }
+        .roadmap-phase {
+            position: relative;
+            margin-bottom: 36px;
+        }
+        .roadmap-phase:last-child { margin-bottom: 0; }
+        .roadmap-dot {
+            position: absolute;
+            left: -35px;
+            top: 10px;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--bg-surface);
+            box-shadow: 0 0 0 2px var(--border-strong);
+            background: var(--bg-surface);
+        }
+        .roadmap-dot.done    { background: var(--green);         box-shadow: 0 0 0 2px var(--green); }
+        .roadmap-dot.active  { background: var(--blue-primary);  box-shadow: 0 0 0 2px var(--blue-primary); }
+        .roadmap-dot.pending { background: var(--border-strong); box-shadow: 0 0 0 2px var(--border-strong); }
+        .roadmap-phase-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            padding: 3px 10px;
+            border-radius: 99px;
+            margin-bottom: 10px;
+        }
+        .tag-yellow  { background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; }
+        .tag-blue    { background: var(--blue-light); color: #1D4ED8; border: 1px solid #BFDBFE; }
+        .tag-purple  { background: var(--purple-bg); color: #6D28D9; border: 1px solid var(--purple-border); }
+        .roadmap-phase-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+        .roadmap-phase-sprint {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin-bottom: 10px;
+        }
+        .roadmap-phase-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 680px;
+        }
+
+        /* ======================================================
+           Modals & Drawers
+        ====================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(11,31,51,.55);
+            backdrop-filter: blur(3px);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s ease;
+        }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+        /* Drawer */
+        .drawer {
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 100%;
+            max-width: 520px;
+            background: var(--bg-surface);
+            box-shadow: var(--shadow-xl);
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform .28s cubic-bezier(.4,0,.2,1);
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-overlay.open .drawer { transform: translateX(0); }
+        .drawer-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-default);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            flex-shrink: 0;
+            background: var(--bg-subtle);
+        }
+        .drawer-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            margin-top: 8px;
+        }
+        .drawer-body {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .drawer-section {
+            margin-bottom: 20px;
+        }
+        .drawer-section-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+        .drawer-section-value {
+            font-size: 13.5px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+        .drawer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .drawer-alert {
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            border: 1px solid;
+            margin-bottom: 16px;
+        }
+        .drawer-alert.red   { background: var(--red-bg);    border-color: var(--red-border); }
+        .drawer-alert.blue  { background: var(--blue-light); border-color: #BFDBFE; }
+        .drawer-alert-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 4px;
+        }
+        .drawer-alert.red  .drawer-alert-label { color: var(--red); }
+        .drawer-alert.blue .drawer-alert-label { color: var(--blue-primary); }
+        .drawer-alert-text {
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
+        .drawer-alert.red  .drawer-alert-text { color: #7F1D1D; }
+        .drawer-alert.blue .drawer-alert-text { color: #1E3A8A; }
+        .drawer-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-default);
+            background: var(--bg-subtle);
+            flex-shrink: 0;
+        }
+
+        /* Dialog (centered modal) */
+        .dialog {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(.95);
+            background: var(--bg-surface);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            width: 100%;
+            max-width: 560px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transition: transform .22s cubic-bezier(.4,0,.2,1);
+        }
+        .modal-overlay.open .dialog { transform: translate(-50%, -50%) scale(1); }
+        .dialog-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dialog-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .dialog-body { padding: 24px; }
+        .dialog-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-default);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            background: var(--bg-subtle);
+            border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+        }
+
+        /* ======================================================
+           Form Elements (in dialog)
+        ====================================================== */
+        .form-group { margin-bottom: 16px; }
+        .form-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        .form-control {
+            width: 100%;
+            height: 38px;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 0 12px;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: var(--bg-surface);
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .form-control:focus {
+            border-color: var(--blue-primary);
+            box-shadow: 0 0 0 3px rgba(0,86,210,.1);
+        }
+        textarea.form-control {
+            height: auto;
+            padding: 10px 12px;
+            resize: vertical;
+        }
+        .form-control::placeholder { color: var(--text-muted); }
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .form-span-2 { grid-column: span 2; }
+
+        /* ======================================================
+           Footer
+        ====================================================== */
+        .site-footer {
+            background: var(--blue-dark);
+            border-top: 1px solid rgba(255,255,255,.07);
+            padding: 20px 28px;
+        }
+        .footer-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-copy {
+            font-size: 11px;
+            color: rgba(255,255,255,.35);
+        }
+        .footer-badge {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #FCA5A5;
+            background: rgba(220,38,38,.15);
+            border: 1px solid rgba(220,38,38,.25);
+            padding: 3px 10px;
+            border-radius: 99px;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+
+        /* ======================================================
+           Two-col layout
+        ====================================================== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .gap-20 { gap: 20px; }
+
+        /* ======================================================
+           Utility
+        ====================================================== */
+        .hidden { display: none !important; }
+        .flex   { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-8  { gap: 8px; }
+        .gap-12 { gap: 12px; }
+        .mb-4   { margin-bottom: 4px; }
+        .mb-8   { margin-bottom: 8px; }
+        .mb-16  { margin-bottom: 16px; }
+        .mb-24  { margin-bottom: 24px; }
+        .mt-2   { margin-top: 2px; }
+        .mt-4   { margin-top: 4px; }
+        .mt-6   { margin-top: 6px; }
+        .mt-8   { margin-top: 8px; }
+        .text-muted { color: var(--text-muted); }
+        .text-primary { color: var(--text-primary); }
+        .font-600 { font-weight: 600; }
+        .font-700 { font-weight: 700; }
+        .divider { border: none; border-top: 1px solid var(--border-default); margin: 20px 0; }
+
+        /* ======================================================
+           Responsive
+        ====================================================== */
+        @media (max-width: 1100px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .risk-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .header-inner { height: auto; padding: 14px 18px; flex-wrap: wrap; }
+            .header-divider { display: none; }
+            .header-title-block p { display: none; }
+            .main-content { padding: 18px 14px 32px; }
+            .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .risk-grid { grid-template-columns: 1fr; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .filter-group { flex-direction: column; align-items: stretch; }
+            .form-input, .form-select { min-width: unset; width: 100%; }
+            .drawer { max-width: 100%; }
+            .dialog { max-width: calc(100% - 24px); }
+            .form-grid-2 { grid-template-columns: 1fr; }
+            .form-span-2 { grid-column: span 1; }
+            .stat-mini-grid { grid-template-columns: 1fr 1fr 1fr; }
+            .roadmap-timeline { padding-left: 20px; }
+            .roadmap-dot { left: -26px; }
+        }
+
+        /* ======================================================
+           Animations
+        ====================================================== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .tab-content.active {
+            animation: fadeIn .22s ease forwards;
+        }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: .6; }
+        }
+        .pulse-anim { animation: pulse-red 2s infinite; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="header-brand">
+                <div class="brand-logos">
+                    <span class="brand-chip chip-meli">Mercado Livre</span>
+                    <span class="brand-sep">×</span>
+                    <span class="brand-chip chip-totvs">TOTVS / Ahgora</span>
+                </div>
+                <div class="header-divider"></div>
+                <div class="header-title-block">
+                    <h1>Mapeamento Estratégico de Integrações</h1>
+                    <p>Painel de controle · Matriz RACI · Plano de Riscos · Roadmap</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button onclick="exportToCSV()" class="btn btn-ghost-white btn-sm">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Exportar CSV
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== NAV TABS ===== -->
+    <div class="nav-bar">
+        <div class="nav-inner">
+            <button onclick="switchTab('resumo')" id="tab-resumo" class="tab-btn active">
+                <svg class="tab-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"/></svg>
+                Resumo Executivo
+            </button>
+            <button onclick="switchTab('planilha')" id="tab-planilha" class="tab-btn">
+                <svg class="tab-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                Mapeamento
+            </button>
+            <button onclick="switchTab('raci')" id="tab-raci" class="tab-btn">
+                <svg class="tab-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.112-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Matriz RACI
+            </button>
+            <button onclick="switchTab('riscos')" id="tab-riscos" class="tab-btn">
+                <svg class="tab-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                Quadro de Riscos
+            </button>
+            <button onclick="switchTab('roadmap')" id="tab-roadmap" class="tab-btn">
+                <svg class="tab-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                Roadmap SOAP → REST
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main-content">
+
+        <!-- ================================================
+             TAB: RESUMO EXECUTIVO
+        ================================================ -->
+        <section id="content-resumo" class="tab-content active">
+
+            <!-- KPIs -->
+            <div class="kpi-grid mb-24">
+                <div class="kpi-card kpi-blue">
+                    <div class="kpi-icon blue">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    </div>
+                    <div class="kpi-label">Total de Integrações</div>
+                    <div class="kpi-value blue" id="kpi-total">11</div>
+                    <div class="kpi-sub">Mapeadas no projeto</div>
+                </div>
+                <div class="kpi-card kpi-red">
+                    <div class="kpi-icon red">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    </div>
+                    <div class="kpi-label">Crítico / Instável</div>
+                    <div class="kpi-value red" id="kpi-atencao">5</div>
+                    <div class="kpi-sub">Requerem ação imediata</div>
+                </div>
+                <div class="kpi-card kpi-amber">
+                    <div class="kpi-icon amber">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="kpi-label">Em Migração / Pendente</div>
+                    <div class="kpi-value amber" id="kpi-pendencias">4</div>
+                    <div class="kpi-sub">Em evolução ou aguardando</div>
+                </div>
+                <div class="kpi-card kpi-green">
+                    <div class="kpi-icon green">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="kpi-label">Sincronização Saudável</div>
+                    <div class="kpi-value green" id="kpi-ok">2</div>
+                    <div class="kpi-sub">Status OK operacional</div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid-2 mb-24">
+                <!-- Responsabilidade -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            <div class="card-header-icon" style="background:var(--blue-light);">
+                                <svg width="14" height="14" fill="none" stroke="var(--blue-primary)" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                            </div>
+                            Distribuição por Responsabilidade
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-bar-row">
+                            <div class="bar-item">
+                                <div class="bar-meta">
+                                    <span class="bar-label">
+                                        <span class="resp-chip meli">MELI</span>
+                                        &nbsp;Mercado Livre
+                                    </span>
+                                    <span class="bar-count" id="count-resp-meli">4 integrações</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill bar-meli" id="bar-resp-meli" style="width:36%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-meta">
+                                    <span class="bar-label">
+                                        <span class="resp-chip totvs">TOTVS</span>
+                                        &nbsp;Ahgora
+                                    </span>
+                                    <span class="bar-count" id="count-resp-totvs">4 integrações</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill bar-totvs" id="bar-resp-totvs" style="width:36%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-meta">
+                                    <span class="bar-label">
+                                        <span class="resp-chip compartilhado">Compart.</span>
+                                        &nbsp;Co-dependência
+                                    </span>
+                                    <span class="bar-count" id="count-resp-comp">3 integrações</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill bar-comp" id="bar-resp-comp" style="width:28%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Operacional -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            <div class="card-header-icon" style="background:var(--bg-subtle); border:1px solid var(--border-default);">
+                                <svg width="14" height="14" fill="none" stroke="var(--text-secondary)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10"/></svg>
+                            </div>
+                            Status Operacional Atual
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="stat-mini-grid">
+                            <div class="stat-mini">
+                                <div class="stat-mini-label">OK</div>
+                                <div class="stat-mini-value stat-ok" id="stat-ok">3</div>
+                            </div>
+                            <div class="stat-mini">
+                                <div class="stat-mini-label">Instável</div>
+                                <div class="stat-mini-value stat-instavel" id="stat-instavel">2</div>
+                            </div>
+                            <div class="stat-mini">
+                                <div class="stat-mini-label">Em Migração</div>
+                                <div class="stat-mini-value stat-migracao" id="stat-migraca">2</div>
+                            </div>
+                            <div class="stat-mini">
+                                <div class="stat-mini-label">Crítico</div>
+                                <div class="stat-mini-value stat-critico pulse-anim" id="stat-critico">3</div>
+                            </div>
+                            <div class="stat-mini" style="grid-column:span 2;">
+                                <div class="stat-mini-label">Pendente</div>
+                                <div class="stat-mini-value stat-pendente" id="stat-pendente">1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk + Pending -->
+            <div class="grid-2">
+                <!-- Riscos Críticos -->
+                <div class="alert-dark">
+                    <div class="alert-dark-title">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20" style="color:#EF4444;"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                        Riscos Críticos — Fechamento / Banco de Horas
+                    </div>
+                    <div class="alert-item">
+                        <div class="alert-item-title red">Integração de Afastamentos (Envio)</div>
+                        <div class="alert-item-body">Formatos de data incompatíveis gerados no sistema MELI inviabilizam a consolidação no cálculo final, podendo impactar o cronograma de folha.</div>
+                    </div>
+                    <div class="alert-item">
+                        <div class="alert-item-title red">Regras de Banco de Horas</div>
+                        <div class="alert-item-body">Divergências frequentes entre políticas acordadas e a configuração ativa no motor Ahgora. Gera perigo de passivo trabalhista.</div>
+                    </div>
+                    <div class="alert-item">
+                        <div class="alert-item-title orange">Integração de Resultados (Recon)</div>
+                        <div class="alert-item-body">Lentidão no processamento de grandes lotes via SOAP pode impactar consumo de resultados e indicadores corporativos.</div>
+                    </div>
+                </div>
+
+                <!-- Pendências -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            <div class="card-header-icon" style="background:#EEF2FF;">
+                                <svg width="14" height="14" fill="none" stroke="#6366F1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            </div>
+                            Pendências Prioritárias &amp; Migrações
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="pending-item amber">
+                            <div class="pending-item-title">Hierarquia SAP / Gestores</div>
+                            <div class="pending-item-body">Depende do MELI construir a API REST para descontinuar o fluxo provisório e instável de upload de arquivos manuais.</div>
+                        </div>
+                        <div class="pending-item blue">
+                            <div class="pending-item-title">Migração de APIs Legadas (SOAP → REST)</div>
+                            <div class="pending-item-body">Necessário concluir infraestrutura REST no barramento MuleSoft do MELI para permitir o desligamento do SOAP sobrecarregado.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================
+             TAB: MAPEAMENTO DE INTEGRAÇÕES
+        ================================================ -->
+        <section id="content-planilha" class="tab-content">
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <span class="filter-label">Filtrar:</span>
+                    <input type="text" id="search-input" onkeyup="filterTable()" placeholder="Buscar por nome ou objetivo..." class="form-input" />
+                    <select id="filter-responsavel" onchange="filterTable()" class="form-select">
+                        <option value="">Todos os Responsáveis</option>
+                        <option value="MELI">Mercado Livre (MELI)</option>
+                        <option value="TOTVS-Ahgora">TOTVS - Ahgora</option>
+                        <option value="Compartilhado">Compartilhado</option>
+                    </select>
+                    <select id="filter-status" onchange="filterTable()" class="form-select">
+                        <option value="">Todos os Status</option>
+                        <option value="OK">OK</option>
+                        <option value="Instável">Instável</option>
+                        <option value="Em Migração">Em Migração</option>
+                        <option value="Crítico">Crítico</option>
+                        <option value="Pendente">Pendente</option>
+                    </select>
+                    <button onclick="resetFilters()" class="btn btn-ghost btn-sm">Limpar</button>
+                </div>
+                <button onclick="toggleModal(true)" class="btn btn-primary btn-sm">
+                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                    Adicionar Integração
+                </button>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrap">
+                <div class="table-scroll">
+                    <table class="data-table" id="integrations-table">
+                        <thead>
+                            <tr>
+                                <th>Nome da Integração</th>
+                                <th>Objetivo / Função</th>
+                                <th>Tipo</th>
+                                <th>Origem</th>
+                                <th>Destino</th>
+                                <th>Responsável</th>
+                                <th>Status</th>
+                                <th>Prioridade</th>
+                                <th style="text-align:center; width:52px;">Ver</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <span class="table-footer-text">Exibindo <strong id="visible-count">11</strong> de <strong id="total-count">11</strong> integrações mapeadas</span>
+                    <span class="table-hint">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        Clique no ícone para ver detalhes completos
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================
+             TAB: MATRIZ RACI
+        ================================================ -->
+        <section id="content-raci" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-header-title" style="font-size:15px; font-weight:700;">Matriz RACI do Projeto</div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">
+                            <strong style="color:var(--text-secondary);">R</strong>esponsible &nbsp;·&nbsp;
+                            <strong style="color:var(--text-secondary);">A</strong>ccountable &nbsp;·&nbsp;
+                            <strong style="color:var(--text-secondary);">C</strong>onsulted &nbsp;·&nbsp;
+                            <strong style="color:var(--text-secondary);">I</strong>nformed
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:6px; flex-shrink:0;">
+                        <span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; color:var(--text-muted);">
+                            <span class="raci-pill raci-R">R</span> Executa
+                        </span>
+                        <span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; color:var(--text-muted);">
+                            <span class="raci-pill raci-A">A</span> Aprova
+                        </span>
+                        <span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; color:var(--text-muted);">
+                            <span class="raci-pill raci-C">C</span> Consulta
+                        </span>
+                        <span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; color:var(--text-muted);">
+                            <span class="raci-pill raci-I">I</span> Informado
+                        </span>
+                    </div>
+                </div>
+                <div class="table-scroll">
+                    <table class="raci-table">
+                        <thead>
+                            <tr>
+                                <th>Atividade / Macroprocesso</th>
+                                <th>Gestão MELI<br><span style="font-weight:400; text-transform:none; letter-spacing:0; opacity:.7;">(Negócio/RH)</span></th>
+                                <th>TI / Devs<br><span style="font-weight:400; text-transform:none; letter-spacing:0; opacity:.7;">MELI</span></th>
+                                <th>Equipe<br><span style="font-weight:400; text-transform:none; letter-spacing:0; opacity:.7;">TOTVS</span></th>
+                                <th>Suporte<br><span style="font-weight:400; text-transform:none; letter-spacing:0; opacity:.7;">Ahgora</span></th>
+                                <th>GP do<br><span style="font-weight:400; text-transform:none; letter-spacing:0; opacity:.7;">Projeto</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Envio de Carga de Funcionários e Afastamentos</td>
+                                <td><span class="raci-pill raci-A">A</span></td>
+                                <td><span class="raci-pill raci-R">R</span></td>
+                                <td><span class="raci-pill raci-C">C</span></td>
+                                <td><span class="raci-pill raci-I">I</span></td>
+                                <td><span class="raci-pill raci-I">I</span></td>
+                            </tr>
+                            <tr>
+                                <td>Parametrização e Cálculo de Banco de Horas</td>
+                                <td><span class="raci-pill raci-A">A</span></td>
+                                <td><span class="raci-pill raci-I">I</span></td>
+                                <td><span class="raci-pill raci-R">R</span></td>
+                                <td><span class="raci-pill raci-C">C</span></td>
+                                <td><span class="raci-pill raci-I">I</span></td>
+                            </tr>
+                            <tr>
+                                <td>Conciliação de Resultados (Recon de Horas)</td>
+                                <td><span class="raci-pill raci-C">C</span></td>
+                                <td><span class="raci-pill raci-I">I</span></td>
+                                <td><span class="raci-pill raci-R">R</span></td>
+                                <td><span class="raci-pill raci-A">A</span></td>
+                                <td><span class="raci-pill raci-I">I</span></td>
+                            </tr>
+                            <tr>
+                                <td>Migração de Arquitetura SOAP → REST</td>
+                                <td><span class="raci-pill raci-C">C</span></td>
+                                <td><span class="raci-pill raci-R">R</span></td>
+                                <td><span class="raci-pill raci-R">R</span></td>
+                                <td><span class="raci-pill raci-A">A</span></td>
+                                <td><span class="raci-pill raci-R">R</span></td>
+                            </tr>
+                            <tr>
+                                <td>Definição do Layout de Gestores (SAP)</td>
+                                <td><span class="raci-pill raci-A">A</span></td>
+                                <td><span class="raci-pill raci-R">R</span></td>
+                                <td><span class="raci-pill raci-C">C</span></td>
+                                <td><span class="raci-pill raci-I">I</span></td>
+                                <td><span class="raci-pill raci-I">I</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================
+             TAB: QUADRO DE RISCOS
+        ================================================ -->
+        <section id="content-riscos" class="tab-content">
+            <div class="risk-grid">
+                <!-- Risco 1 -->
+                <div class="risk-card">
+                    <div class="risk-card-accent" style="background:var(--red);"></div>
+                    <div class="risk-card-body">
+                        <div class="risk-card-meta">
+                            <span class="badge critico">
+                                <span class="badge-dot pulse-anim" style="background:var(--red);"></span>
+                                Crítico
+                            </span>
+                            <span class="risk-card-category">Folha / Ponto</span>
+                        </div>
+                        <div class="risk-card-title">Incompatibilidade de Datas em Afastamentos</div>
+                        <div class="risk-card-desc">Formatos de data divergentes enviados pelo Mercado Livre quebram o parser da API da Ahgora, inviabilizando registros.</div>
+                    </div>
+                    <div class="risk-card-footer">
+                        <div class="risk-card-footer-label">Ação de Mitigação</div>
+                        <div class="risk-card-footer-text">Implementar middleware de transformação no MuleSoft para forçar o formato ISO-8601 antes de transmitir os dados.</div>
+                    </div>
+                </div>
+
+                <!-- Risco 2 -->
+                <div class="risk-card">
+                    <div class="risk-card-accent" style="background:var(--orange);"></div>
+                    <div class="risk-card-body">
+                        <div class="risk-card-meta">
+                            <span class="badge instavel">
+                                <span class="badge-dot" style="background:var(--orange);"></span>
+                                Alto
+                            </span>
+                            <span class="risk-card-category">Infraestrutura</span>
+                        </div>
+                        <div class="risk-card-title">Gargalo no Legado SOAP</div>
+                        <div class="risk-card-desc">Sobrecarga de chamadas simultâneas nos picos operacionais de batida de ponto resulta em timeouts na API SOAP.</div>
+                    </div>
+                    <div class="risk-card-footer">
+                        <div class="risk-card-footer-label">Ação de Mitigação</div>
+                        <div class="risk-card-footer-text">Habilitar filas de retenção temporárias e acelerar a transição das rotas para o microsserviço REST.</div>
+                    </div>
+                </div>
+
+                <!-- Risco 3 -->
+                <div class="risk-card">
+                    <div class="risk-card-accent" style="background:var(--red);"></div>
+                    <div class="risk-card-body">
+                        <div class="risk-card-meta">
+                            <span class="badge critico">
+                                <span class="badge-dot pulse-anim" style="background:var(--red);"></span>
+                                Crítico
+                            </span>
+                            <span class="risk-card-category">Sindicato / Legal</span>
+                        </div>
+                        <div class="risk-card-title">Incongruência de Banco de Horas</div>
+                        <div class="risk-card-desc">Dificuldade em alinhar acordos de convenção coletiva do MELI com as regras configuradas no painel da Ahgora.</div>
+                    </div>
+                    <div class="risk-card-footer">
+                        <div class="risk-card-footer-label">Ação de Mitigação</div>
+                        <div class="risk-card-footer-text">Criação de comitê quinzenal de auditoria e congelamento de alterações nos 15 dias anteriores ao fechamento oficial.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================
+             TAB: ROADMAP
+        ================================================ -->
+        <section id="content-roadmap" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-header-title" style="font-size:15px; font-weight:700;">Roadmap de Migração SOAP → REST</div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">Estratégia faseada para modernização de arquitetura e desativação segura dos serviços legados.</div>
+                    </div>
+                </div>
+                <div class="card-body" style="padding:32px 36px;">
+                    <div class="roadmap-timeline">
+                        <!-- Phase 1 -->
+                        <div class="roadmap-phase">
+                            <div class="roadmap-dot done"></div>
+                            <span class="roadmap-phase-tag tag-yellow">
+                                <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                Fase 1 · Concluída
+                            </span>
+                            <div class="roadmap-phase-title">Mapeamento &amp; Homologação</div>
+                            <div class="roadmap-phase-sprint">Sprints 1 a 3</div>
+                            <div class="roadmap-phase-desc">Validação estrutural de todas as APIs modernas de destino através do Postman (já executada com sucesso e sem falhas nos ambientes TOTVS-Ahgora). Planejamento de mapeamento de campos com o RH do Mercado Livre.</div>
+                        </div>
+
+                        <!-- Phase 2 -->
+                        <div class="roadmap-phase">
+                            <div class="roadmap-dot active"></div>
+                            <span class="roadmap-phase-tag tag-blue">
+                                <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                Fase 2 · Em andamento
+                            </span>
+                            <div class="roadmap-phase-title">Criação dos Adaptadores &amp; Correções</div>
+                            <div class="roadmap-phase-sprint">Sprints 4 a 6</div>
+                            <div class="roadmap-phase-desc">Ajuste dos formatos de payload originados no Mercado Livre (correção de datas em afastamentos e preenchimento de CPFs/Cadastros nulos). Início do desenvolvimento de conexões paralelas REST.</div>
+                        </div>
+
+                        <!-- Phase 3 -->
+                        <div class="roadmap-phase">
+                            <div class="roadmap-dot pending"></div>
+                            <span class="roadmap-phase-tag tag-purple">
+                                <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Fase 3 · Planejada
+                            </span>
+                            <div class="roadmap-phase-title">Rollout Controlado &amp; Desligamento</div>
+                            <div class="roadmap-phase-sprint">Sprints 7 a 9</div>
+                            <div class="roadmap-phase-desc">Ativação definitiva do painel de monitoramento integrado (Dashboard de Validação). Desligamento faseado do tráfego SOAP legado e migração de 100% dos usuários ativos para as APIs REST.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-copy">© 2026 Projeto de Integração MELI × TOTVS/Ahgora. Painel Corporativo Avançado.</span>
+            <span class="footer-badge">Uso Interno · Confidencial</span>
+        </div>
+    </footer>
+
+    <!-- ===== DRAWER: DETALHES ===== -->
+    <div id="view-modal" class="modal-overlay" onclick="handleOverlayClick(event, 'view-modal')">
+        <div class="drawer" onclick="event.stopPropagation()">
+            <div class="drawer-header">
+                <div>
+                    <span id="modal-priority-badge"></span>
+                    <div class="drawer-title" id="modal-title">Nome da Integração</div>
+                </div>
+                <button onclick="closeModal()" class="btn-icon" style="margin-left:8px; flex-shrink:0;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="drawer-body">
+                <div class="drawer-section">
+                    <div class="drawer-section-label">Objetivo / Função</div>
+                    <div class="drawer-section-value" id="modal-desc"></div>
+                </div>
+                <div class="drawer-grid">
+                    <div>
+                        <div class="drawer-section-label">Tipo de Tecnologia</div>
+                        <div class="drawer-section-value" id="modal-tech" style="font-weight:700;"></div>
+                    </div>
+                    <div>
+                        <div class="drawer-section-label">Status Atual</div>
+                        <div class="drawer-section-value" id="modal-status" style="font-weight:700;"></div>
+                    </div>
+                    <div>
+                        <div class="drawer-section-label">Origem</div>
+                        <div class="drawer-section-value" id="modal-origem" style="font-weight:600;"></div>
+                    </div>
+                    <div>
+                        <div class="drawer-section-label">Destino</div>
+                        <div class="drawer-section-value" id="modal-destino" style="font-weight:600;"></div>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="drawer-alert red">
+                    <div class="drawer-alert-label">Problemas Detectados</div>
+                    <div class="drawer-alert-text" id="modal-problemas"></div>
+                </div>
+                <div class="drawer-section">
+                    <div class="drawer-section-label">Impacto no Negócio</div>
+                    <div class="drawer-section-value" id="modal-impacto" style="font-weight:600;"></div>
+                </div>
+                <div class="drawer-section">
+                    <div class="drawer-section-label">Evidências / Observações</div>
+                    <div class="drawer-section-value" id="modal-evidencias" style="color:var(--text-muted); font-style:italic; font-size:12.5px; background:var(--bg-subtle); padding:10px 12px; border-radius:var(--radius-sm); border:1px solid var(--border-default);"></div>
+                </div>
+                <hr class="divider">
+                <div class="drawer-alert blue">
+                    <div class="drawer-alert-label">Próxima Ação</div>
+                    <div class="drawer-alert-text" id="modal-action" style="font-weight:600; margin-bottom:6px;"></div>
+                    <div style="font-size:11.5px; color:var(--text-muted);">Responsável: <strong style="color:var(--blue-primary);" id="modal-action-resp"></strong></div>
+                </div>
+            </div>
+            <div class="drawer-footer">
+                <button onclick="closeModal()" class="btn btn-dark" style="width:100%;">
+                    Fechar Painel Detalhado
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DIALOG: ADICIONAR INTEGRAÇÃO ===== -->
+    <div id="add-modal" class="modal-overlay" onclick="handleOverlayClick(event, 'add-modal')">
+        <div class="dialog" onclick="event.stopPropagation()">
+            <div class="dialog-header">
+                <div class="dialog-title">Nova Integração</div>
+                <button onclick="toggleModal(false)" class="btn-icon">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="dialog-body">
+                <form onsubmit="handleFormSubmit(event)" id="add-form">
+                    <div class="form-grid-2">
+                        <div class="form-group form-span-2">
+                            <label class="form-label">Nome da Integração *</label>
+                            <input type="text" name="nome" required class="form-control" placeholder="Ex: Integração de Funcionários" />
+                        </div>
+                        <div class="form-group form-span-2">
+                            <label class="form-label">Objetivo / Função *</label>
+                            <textarea name="objetivo" required rows="2" class="form-control" placeholder="Descreva o objetivo desta integração..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tipo *</label>
+                            <select name="tipo" required class="form-control">
+                                <option value="REST">REST</option>
+                                <option value="SOAP">SOAP</option>
+                                <option value="Recon">Recon</option>
+                                <option value="Manual">Manual</option>
+                                <option value="SAP">SAP</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Responsável Principal *</label>
+                            <select name="responsavel" required class="form-control">
+                                <option value="MELI">Mercado Livre (MELI)</option>
+                                <option value="TOTVS-Ahgora">TOTVS - Ahgora</option>
+                                <option value="Compartilhado">Compartilhado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Origem dos Dados *</label>
+                            <input type="text" name="origem" required class="form-control" placeholder="Ex: Mercado Livre (SAP)" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Destino dos Dados *</label>
+                            <input type="text" name="destino" required class="form-control" placeholder="Ex: Ahgora Core" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Status *</label>
+                            <select name="status" required class="form-control">
+                                <option value="OK">OK</option>
+                                <option value="Instável">Instável</option>
+                                <option value="Em Migração">Em Migração</option>
+                                <option value="Crítico">Crítico</option>
+                                <option value="Pendente">Pendente</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Prioridade *</label>
+                            <select name="prioridade" required class="form-control">
+                                <option value="Baixa">Baixa</option>
+                                <option value="Média">Média</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Crítica">Crítica</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-span-2">
+                            <label class="form-label">Problemas Identificados</label>
+                            <input type="text" name="problemas" class="form-control" placeholder="Descreva os problemas conhecidos..." />
+                        </div>
+                        <div class="form-group form-span-2">
+                            <label class="form-label">Impacto no Negócio</label>
+                            <input type="text" name="impacto" class="form-control" placeholder="Qual o impacto operacional?" />
+                        </div>
+                        <div class="form-group form-span-2">
+                            <label class="form-label">Evidências / Observações</label>
+                            <input type="text" name="observacoes" class="form-control" placeholder="Logs, tickets, evidências..." />
+                        </div>
+                        <div class="form-group form-span-2">
+                            <label class="form-label">Próximas Ações</label>
+                            <input type="text" name="acoes" class="form-control" placeholder="Ação prioritária a tomar..." />
+                        </div>
+                        <div class="form-group form-span-2">
+                            <label class="form-label">Responsável pela Ação</label>
+                            <input type="text" name="responsavel_acao" class="form-control" placeholder="Time ou pessoa responsável..." />
+                        </div>
+                    </div>
+                    <div class="dialog-footer" style="margin: 0 -24px -24px; padding:16px 24px;">
+                        <button type="button" onclick="toggleModal(false)" class="btn btn-ghost">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            Salvar Registro
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== APP LOGIC (preserved 100%) ===== -->
+    <script>
+        // Core Database (Consolidated fields as requested)
+        let integrations = [
+            {
+                nome: "Integração de Funcionários",
+                objetivo: "Sincronização diária de contratações, demissões e alterações de cadastro de colaboradores.",
+                tipo: "REST",
+                origem: "Mercado Livre (SAP)",
+                destino: "Ahgora Core",
+                responsavel: "Compartilhado",
+                status: "Em Migração",
+                prioridade: "Alta",
+                problemas: "Ausência de CPF ou campos cadastrais obrigatórios em branco no payload enviado pelo Mercado Livre.",
+                impacto: "Bloqueio do cadastramento na Ahgora, impedindo o colaborador de registrar ponto regular.",
+                evidencias: "Logs do barramento de API da Ahgora registram rejeições de Bad Request (HTTP 400).",
+                acao: "Validar e rejeitar cadastros incompletos no barramento do Mercado Livre antes da transmissão.",
+                responsavel_acao: "Mercado Livre (TI)"
+            },
+            {
+                nome: "Integração de Afastamentos (Envio)",
+                objetivo: "Exportação de atestados médicos, licenças, suspensões e programações de férias de colaboradores.",
+                tipo: "REST",
+                origem: "Mercado Livre (SAP)",
+                destino: "Ahgora Core",
+                responsavel: "MELI",
+                status: "Crítico / Dependente de migração REST",
+                prioridade: "Crítica",
+                problemas: "Inconsistências severas de formato de datas de afastamento originadas no ERP do Mercado Livre.",
+                impacto: "Falhas no fechamento de folha de pagamento e saldo incorreto do banco de horas.",
+                evidencias: "Divergência de dias de afastamento apurados no espelho final em comparação com atestados enviados.",
+                acao: "Ajustar o barramento de integração do Mercado Livre para adequação estrita do formato de datas das APIs.",
+                responsavel_acao: "Mercado Livre (Squad de Integrações)"
+            },
+            {
+                nome: "Consumo de Afastamentos (Recebimento)",
+                objetivo: "Endpoint receptor das solicitações de afastamento homologadas para validação do saldo de abonos.",
+                tipo: "REST",
+                origem: "Sistemas MELI",
+                destino: "Ahgora Database",
+                responsavel: "TOTVS-Ahgora",
+                status: "OK",
+                prioridade: "Baixa",
+                problemas: "Nenhuma inconsistência de processamento interno no servidor Ahgora.",
+                impacto: "Baixo, desde que o payload seja enviado de forma estruturada e em conformidade.",
+                evidencias: "API validada via Postman com tempos de resposta abaixo de 100ms e 100% de sucesso estrutural.",
+                acao: "Monitorar volumetria durante os picos operacionais de importação.",
+                responsavel_acao: "TOTVS-Ahgora (Suporte)"
+            },
+            {
+                nome: "Integração de Resultados (Recon)",
+                objetivo: "Consolidação e retorno de apuração de horas, adicionais noturnos e atrasos calculados.",
+                tipo: "Recon",
+                origem: "Ahgora Database",
+                destino: "TOTVS Protheus",
+                responsavel: "TOTVS-Ahgora",
+                status: "Instável",
+                prioridade: "Crítica",
+                problemas: "Lentidão acentuada no fechamento e conciliação de grandes arquivos de resultados.",
+                impacto: "Gargalo no fluxo de processamento de folha de pagamento, podendo atrasar repasses fiscais.",
+                evidencias: "Incidentes reportados pelo time de RH do MELI sobre timeouts de importação no Protheus.",
+                acao: "Desenvolver paginação no banco de dados Ahgora e carregar pacotes de forma assíncrona.",
+                responsavel_acao: "TOTVS-Ahgora (Engenharia)"
+            },
+            {
+                nome: "APIs de Indicadores e Custos",
+                objetivo: "Disponibilizar métricas gerenciais e de provisão de horas extras para o dashboard corporativo.",
+                tipo: "REST",
+                origem: "Ahgora BI",
+                destino: "Mercado Livre Dashboards",
+                responsavel: "TOTVS-Ahgora",
+                status: "OK",
+                prioridade: "Baixa",
+                problemas: "Inexistentes no lado servidor.",
+                impacto: "Nenhum impacto técnico. Validade de negócio assegurada.",
+                evidencias: "Homologado via Postman sem registrar erros ou intercorrências de barramento.",
+                acao: "Configurar segurança adicionais de token Basic Auth + APIs REST por boas práticas.",
+                responsavel_acao: "TOTVS-Ahgora (Segurança)"
+            },
+            {
+                nome: "Hierarquia SAP / Gestores",
+                objetivo: "Sincronizar a estrutura hierárquica do MELI para parametrização automática de aprovação de ponto.",
+                tipo: "Manual",
+                origem: "Mercado Livre (SAP)",
+                destino: "Ahgora Core",
+                responsavel: "MELI",
+                status: "Pendente",
+                prioridade: "Alta",
+                problemas: "O fluxo é realizado manualmente via planilhas devido à ausência de desenvolvimento da API de saída.",
+                impacto: "Gestores novos ou transferidos ficam temporariamente impedidos de assinar espelhos de suas equipes.",
+                evidencias: "Abertura frequente de chamados no suporte solicitando cadastro de novos líderes.",
+                acao: "Mercado Livre precisa desenvolver a API REST para descontinuar o fluxo provisório e instável de upload manual.",
+                responsavel_acao: "Mercado Livre (Squad SAP)"
+            },
+            {
+                nome: "Regras de Banco de Horas",
+                objetivo: "Parametrização técnica do motor de banco de horas (compensações, limites e multiplicadores).",
+                tipo: "Manual",
+                origem: "Políticas do RH MELI",
+                destino: "Ahgora Engine",
+                responsavel: "Compartilhado",
+                status: "Crítico / Dependente de migração REST",
+                prioridade: "Crítica",
+                problemas: "Regras sindicais alteradas sem tempo hábil de teste, gerando divergências de cálculos.",
+                impacto: "Passivo trabalhista considerável e reclamações das centrais de representação de trabalhadores.",
+                evidencias: "Divergência de saldo apontada pelo time de auditoria de conformidade.",
+                acao: "Definir um freeze (congelamento) de novas políticas 15 dias antes do fechamento operacional.",
+                responsavel_acao: "Compartilhado (Operações MELI e TOTVS)"
+            },
+            {
+                nome: "Histórico de Localização",
+                objetivo: "Coleta e auditoria de coordenadas geográficas de batidas móveis de colaboradores em rota.",
+                tipo: "REST",
+                origem: "Ahgora App",
+                destino: "Mercado Livre Cloud",
+                responsavel: "TOTVS-Ahgora",
+                status: "OK",
+                prioridade: "Média",
+                problemas: "Nenhum.",
+                impacto: "Médio, necessário para a validação legal de rotas de entrega.",
+                evidencias: "Validação via Postman concluída e aceita pela segurança de dados.",
+                acao: "Manter monitoria contínua de latência da nuvem MELI.",
+                responsavel_acao: "TOTVS-Ahgora (Suporte)"
+            },
+            {
+                nome: "Dashboard de Validação",
+                objetivo: "Construção de painel analítico para acompanhar logs, erros e taxas de sucesso das integrações em tempo real.",
+                tipo: "Manual",
+                origem: "Logs de Sistemas",
+                destino: "Painel Operacional",
+                responsavel: "Compartilhado",
+                status: "Pendente",
+                prioridade: "Média",
+                problemas: "Ausência de visualização consolidada dos erros diários (atualmente necessita busca direta de log no console).",
+                impacto: "Demora na detecção de falhas de cadastramento, que só são vistas nas vésperas da pré-folha.",
+                evidencias: "MTTR elevado no diagnóstico de incidentes de sincronização.",
+                acao: "Definir a arquitetura e interfaces de visualização do front-end consolidado.",
+                responsavel_acao: "Compartilhado (Equipes Técnicas)"
+            },
+            {
+                nome: "APIs REST em migração",
+                objetivo: "Pacote de rotas modernas destinadas à modernização global de endpoints e alta disponibilidade.",
+                tipo: "REST",
+                origem: "Ahgora Gateway",
+                destino: "Mercado Livre Core",
+                responsavel: "MELI",
+                status: "Em Migração",
+                prioridade: "Alta",
+                problemas: "Morosidade na adaptação de consumo de novas rotas REST do lado do Mercado Livre.",
+                impacto: "Dependência de ambiente SOAP antigo e instabilidade residual do legado.",
+                evidencias: "Atraso de cronograma no barramento do MuleSoft por falta de desenvolvedores designados no MELI.",
+                acao: "Escalação gerencial no MELI para alocação dedicada de especialistas no barramento REST.",
+                responsavel_acao: "Mercado Livre (Estratégia TI)"
+            },
+            {
+                nome: "APIs SOAP legadas",
+                objetivo: "Processar transmissões básicas de marcações diárias até que a migração de microsserviços se consolide.",
+                tipo: "SOAP",
+                origem: "Ahgora Legacy WebService",
+                destino: "Mercado Livre Middleware",
+                responsavel: "TOTVS-Ahgora",
+                status: "Instável",
+                prioridade: "Alta",
+                problemas: "Instabilidade sob alta concorrência e cargas massivas de batidas ao mesmo tempo.",
+                impacto: "Lentidão de atualização do app de ponto do colaborador.",
+                evidencias: "Erros recorrentes de HTTP 504 (Gateway Timeout) nos horários de entrada e saída de turnos.",
+                acao: "Otimizar fila legada e acelerar migração definitiva para barramento REST correspondente.",
+                responsavel_acao: "Compartilhado"
+            }
+        ];
+
+        // Start Up
+        window.onload = function() {
+            renderTable();
+            updateDashboardMetrics();
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+                el.classList.add('hidden');
+            });
+            // Remove active classes from tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show active content
+            const content = document.getElementById(`content-${tabName}`);
+            content.classList.remove('hidden');
+            content.classList.add('active');
+            // Add active class to clicked button
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+
+        // Dynamic Table Render
+        function renderTable() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+
+            integrations.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                const isCritico = item.status.includes('Crítico');
+                if (isCritico) tr.classList.add('critico-row');
+                tr.setAttribute('data-index', index);
+
+                // Priority Badge Class
+                let prioClass = 'prio-baixa';
+                if (item.prioridade === 'Crítica') prioClass = 'prio-critica';
+                else if (item.prioridade === 'Alta') prioClass = 'prio-alta';
+                else if (item.prioridade === 'Média') prioClass = 'prio-media';
+
+                // Status Badge Class
+                let statusClass = 'pendente';
+                if (item.status === 'OK') statusClass = 'ok';
+                else if (item.status === 'Instável') statusClass = 'instavel';
+                else if (item.status.includes('Em Migração')) statusClass = 'migracao';
+                else if (item.status.includes('Crítico')) statusClass = 'critico';
+                else if (item.status === 'Pendente') statusClass = 'pendente';
+
+                // Status display label
+                let statusLabel = item.status;
+                if (item.status.includes('Crítico')) statusLabel = 'Crítico';
+                if (item.status.includes('Em Migração')) statusLabel = 'Em Migração';
+
+                // Responsible chip
+                let respClass = '';
+                let respChipClass = '';
+                if (item.responsavel === 'MELI') respChipClass = 'meli';
+                else if (item.responsavel === 'TOTVS-Ahgora') respChipClass = 'totvs';
+                else if (item.responsavel === 'Compartilhado') respChipClass = 'compartilhado';
+
+                // Tech tag
+                let techClass = item.tipo.toLowerCase().replace(' ', '-');
+                if (!['rest','soap','recon','manual','sap'].includes(techClass)) techClass = '';
+
+                tr.innerHTML = `
+                    <td class="td-name">${item.nome}</td>
+                    <td class="td-obj td-truncate" style="max-width:220px;" title="${item.objetivo}">${item.objetivo}</td>
+                    <td><span class="tech-tag ${techClass}">${item.tipo}</span></td>
+                    <td style="font-size:11.5px; color:var(--text-muted); white-space:nowrap;">${item.origem}</td>
+                    <td style="font-size:11.5px; color:var(--text-muted); white-space:nowrap;">${item.destino}</td>
+                    <td><span class="resp-chip ${respChipClass}">${item.responsavel}</span></td>
+                    <td><span class="badge ${statusClass}${statusClass === 'critico' ? ' pulse-anim' : ''}">${statusLabel}</span></td>
+                    <td><span class="badge ${prioClass}">${item.prioridade}</span></td>
+                    <td style="text-align:center;">
+                        <button onclick="openDetails(${index})" class="btn-icon" title="Ver Detalhes">
+                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            updateVisibleCounters();
+        }
+
+        // Search & Filter Logic
+        function filterTable() {
+            const searchValue = document.getElementById('search-input').value.toLowerCase();
+            const filterResp = document.getElementById('filter-responsavel').value;
+            const filterStatus = document.getElementById('filter-status').value;
+            
+            const rows = document.querySelectorAll('#table-body tr');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const index = row.getAttribute('data-index');
+                const item = integrations[index];
+
+                const matchesSearch = item.nome.toLowerCase().includes(searchValue) || item.objetivo.toLowerCase().includes(searchValue);
+                const matchesResp = filterResp === "" || item.responsavel === filterResp;
+                const matchesStatus = filterStatus === "" || item.status === filterStatus || item.status.includes(filterStatus);
+
+                if (matchesSearch && matchesResp && matchesStatus) {
+                    row.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+
+            document.getElementById('visible-count').innerText = visibleCount;
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('filter-responsavel').value = '';
+            document.getElementById('filter-status').value = '';
+            filterTable();
+        }
+
+        function updateVisibleCounters() {
+            const total = integrations.length;
+            document.getElementById('total-count').innerText = total;
+            document.getElementById('visible-count').innerText = total;
+        }
+
+        // KPI calculations
+        function updateDashboardMetrics() {
+            const total = integrations.length;
+            const ok = integrations.filter(i => i.status === 'OK').length;
+            const critico = integrations.filter(i => i.status.includes('Crítico')).length;
+            const instavel = integrations.filter(i => i.status === 'Instável').length;
+            const migracao = integrations.filter(i => i.status.includes('Em Migração')).length;
+            const pendente = integrations.filter(i => i.status === 'Pendente').length;
+
+            const meliCount = integrations.filter(i => i.responsavel === 'MELI').length;
+            const totvsCount = integrations.filter(i => i.responsavel === 'TOTVS-Ahgora').length;
+            const compCount = integrations.filter(i => i.responsavel === 'Compartilhado').length;
+
+            // Update main indicators
+            document.getElementById('kpi-total').innerText = total;
+            document.getElementById('kpi-atencao').innerText = critico + instavel;
+            document.getElementById('kpi-pendencias').innerText = migracao + pendente;
+            document.getElementById('kpi-ok').innerText = ok;
+
+            // Status Breakdown count
+            document.getElementById('stat-ok').innerText = ok;
+            document.getElementById('stat-instavel').innerText = instavel;
+            document.getElementById('stat-migraca').innerText = migracao;
+            document.getElementById('stat-critico').innerText = critico;
+            document.getElementById('stat-pendente').innerText = pendente;
+
+            // Responsibilities
+            document.getElementById('count-resp-meli').innerText = `${meliCount} integrações`;
+            document.getElementById('count-resp-totvs').innerText = `${totvsCount} integrações`;
+            document.getElementById('count-resp-comp').innerText = `${compCount} integrações`;
+
+            // Adjust width percentages of CSS bar charts dynamically
+            document.getElementById('bar-resp-meli').style.width = `${(meliCount / total) * 100}%`;
+            document.getElementById('bar-resp-totvs').style.width = `${(totvsCount / total) * 100}%`;
+            document.getElementById('bar-resp-comp').style.width = `${(compCount / total) * 100}%`;
+        }
+
+        // Details Modal/Drawer
+        function openDetails(index) {
+            const item = integrations[index];
+            
+            // Set text content
+            document.getElementById('modal-title').innerText = item.nome;
+            document.getElementById('modal-desc').innerText = item.objetivo;
+            document.getElementById('modal-tech').innerText = item.tipo;
+            document.getElementById('modal-status').innerText = item.status;
+            document.getElementById('modal-origem').innerText = item.origem;
+            document.getElementById('modal-destino').innerText = item.destino;
+            document.getElementById('modal-problemas').innerText = item.problemas || "Nenhum detectado até o momento.";
+            document.getElementById('modal-impacto').innerText = item.impacto || "Processamento normal sem impacto residual.";
+            document.getElementById('modal-evidencias').innerText = item.evidencias || "Em conformidade operacional.";
+            document.getElementById('modal-action').innerText = item.acao || "Nenhuma pendência prioritária listada.";
+            document.getElementById('modal-action-resp').innerText = item.responsavel_acao || "Sem pendências pendentes.";
+
+            // Adjust priority badge
+            const badge = document.getElementById('modal-priority-badge');
+            badge.innerText = `PRIORIDADE: ${item.prioridade}`;
+            badge.className = 'badge';
+            if (item.prioridade === 'Crítica') badge.classList.add('prio-critica');
+            else if (item.prioridade === 'Alta') badge.classList.add('prio-alta');
+            else if (item.prioridade === 'Média') badge.classList.add('prio-media');
+            else badge.classList.add('prio-baixa');
+
+            // Open Transition
+            const modal = document.getElementById('view-modal');
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.classList.add('open');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('view-modal');
+            modal.classList.remove('open');
+        }
+
+        // Create Modal Management
+        function toggleModal(show) {
+            const modal = document.getElementById('add-modal');
+            if (show) {
+                modal.classList.add('open');
+            } else {
+                modal.classList.remove('open');
+            }
+        }
+
+        function handleOverlayClick(event, modalId) {
+            if (event.target === document.getElementById(modalId)) {
+                if (modalId === 'view-modal') closeModal();
+                else toggleModal(false);
+            }
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const newIntegration = {
+                nome: formData.get('nome'),
+                objetivo: formData.get('objetivo'),
+                tipo: formData.get('tipo'),
+                origem: formData.get('origem'),
+                destino: formData.get('destino'),
+                responsavel: formData.get('responsavel'),
+                status: formData.get('status'),
+                prioridade: formData.get('prioridade'),
+                problemas: formData.get('problemas') || "Nenhum problema listado.",
+                impacto: formData.get('impacto') || "Não avaliado.",
+                evidencias: formData.get('observacoes') || "Sem evidências cadastradas.",
+                acao: formData.get('acoes') || "Nenhuma ação programada.",
+                responsavel_acao: formData.get('responsavel_acao') || "Não designado."
+            };
+
+            integrations.push(newIntegration);
+            renderTable();
+            updateDashboardMetrics();
+            toggleModal(false);
+            event.target.reset();
+        }
+
+        // Export data to CSV File
+        function exportToCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            
+            // Header columns
+            csvContent += "Nome da Integração;Objetivo;Tipo;Origem;Destino;Responsavel Principal;Status;Prioridade;Problemas;Impacto;Evidencias;Acao Proposta;Responsavel Acao\r\n";
+            
+            integrations.forEach(item => {
+                let row = `"${item.nome}";"${item.objetivo}";"${item.tipo}";"${item.origem}";"${item.destino}";"${item.responsavel}";"${item.status}";"${item.prioridade}";"${item.problemas || ''}";"${item.impacto || ''}";"${item.evidencias || ''}";"${item.acao || ''}";"${item.responsavel_acao || ''}"`;
+                csvContent += row + "\r\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Mapeamento_Integrações_MELI_TOTVS_Ahgora.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
